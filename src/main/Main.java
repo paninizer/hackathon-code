@@ -126,8 +126,8 @@ public class Main {
 			for (int i=0; i<options.length; i++) {
 				if (options[i].equals(input.toLowerCase())) {
 					selector = i;
-					isValidInput = true;
-					break;
+
+					return selector;
 				}
 			}
 			
@@ -140,7 +140,7 @@ public class Main {
 	public static void handleSelection(String selectId, int selected) {
 		switch (selectId) {
 			case "add/edit" :
-				
+				//addItem();
 				break;
 			case "item menu" :
 				

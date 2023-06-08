@@ -214,6 +214,10 @@ public class Main {
 				return Units.MILLILITRES;
 			case "l" : 
 				return Units.LITRES;
+			case "g" : 
+				return Units.GRAMS;
+			case "kg" : 
+				return Units.KILOGRAMS;
 			case "lb" :
 				return Units.POUNDS;
 			case "oz" :
@@ -236,7 +240,7 @@ public class Main {
 	
 	public static void addItem() throws IOException {
 		String[] options = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", "ea"};
-		String[] descriptions = {"mililitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each (no unit)"};
+		String[] descriptions = {"millilitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each (no unit)"};
 
 		String name = handleSelection("Please input the item name: ", true);
 		boolean cont = false;
@@ -326,19 +330,27 @@ public class Main {
 	}
 	
 	public static void displayItems() throws IOException {
-		String leftAlignFormat = "| %-20s | %-19s | %n";
-		System.out.println("=====================LIST=====================");
-		System.out.format(leftAlignFormat, "Item", "Quantity");
-		System.out.println("==============================================");
+		String[] shortUnitNames = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", ""};
+		String[] longUnitNames = {"millilitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each"};
+
+		String leftAlignFormat = "| %-20s | %-10s | %-10s | %-20s | %-20s | %-5s | %-20s |%n";
+		System.out.println("==============================================================LIST=============================================================");
+		System.out.format(leftAlignFormat, "Item", "Quantity", "Price", "Brand", "Store", "Sale?", "Date");
+		System.out.println("===============================================================================================================================");
 		for (Item item : items) {
-			if (item.unit == Units.EACH) {
-				System.out.format(leftAlignFormat, item.name, (int)item.quantity);
-			} else {
-				String unit = item.unit.toString().toLowerCase();
-				unit = unit.replace("_", " ");
-				System.out.format(leftAlignFormat, item.name, item.quantity + " " + unit);
+			String unit = item.unit.toString().toLowerCase();
+			unit = unit.replace("_", " ");
+			
+			String shortUnit = "";
+			for (int i = 0; i < shortUnitNames.length; i++) {
+				if (longUnitNames[i].contains(unit)) {
+					shortUnit = shortUnitNames[i];
+					break;
+				}
 			}
-			System.out.println("==============================================");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+			System.out.format(leftAlignFormat, item.name, item.quantity + " " + shortUnit, item.price, item.brandName, item.storeName, item.isSale, item.date.format(formatter));
+			System.out.println("===============================================================================================================================");
 		}
 	}
 	

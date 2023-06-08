@@ -23,7 +23,7 @@ public class Item {
 	boolean isSale;
 	LocalDate date;
 	
-	public Item(String name, double quantity, Units unit, double price, String brandName, boolean isSale, String store) {
+	public Item(String name, double quantity, Units unit, double price, String brandName, boolean isSale, String store, String date) {
 		this.name = name;
 		
 		if (unit == Units.OUNCES) {
@@ -42,7 +42,16 @@ public class Item {
 		this.brandName = brandName;
 		this.isSale = isSale;
 		this.storeName = store;
-		this.date = LocalDate.now();
+		
+		LocalDate d;
+		
+		if (date.equals("")) {
+			d = LocalDate.now();
+		} else {
+			d = LocalDate.parse(date);
+		}
+		
+		this.date = d;
 	}
 	
 	public double getUnitPrice() {

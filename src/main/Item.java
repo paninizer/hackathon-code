@@ -68,14 +68,28 @@ public class Item {
 	}
 	
 	public static boolean parseQuantity(String quantity) {
-		String[] suffixes = {"g", "oz", "fl oz", "ml", "ea"};
+		String[] suffixes = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", "ea"};
 		
-		String[] parsing = quantity.split(" ");
+		String[] parsing = quantity.split("\s");
+		boolean found = false;
+		
+		//System.out.println(parsing[1]);
+		
 		for (int i=0; i<suffixes.length; i++) {
-			if (!parsing[1].endsWith(suffixes[i])) return false;
+			if (suffixes[i].equals(parsing[1])) {
+				found = true;
+				break;
+			}
 		}
 		
-		if (!Main.isNumeric(parsing[0])) return false;
+		if (!found) return false;
+		
+		try {
+			Double.parseDouble(parsing[0]);
+		} catch (java.lang.NumberFormatException e) {
+			System.out.println("point 2");
+			return false;
+		}
 		
 		return true;
 	}

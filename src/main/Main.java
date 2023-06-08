@@ -207,18 +207,29 @@ public class Main {
 	}
 	
 	public static Units handleQuantity(String unit) {
-		
-		Units returning = Units.EACH;
-		
 		switch (unit) {
 			case "ml" :
 				return Units.MILLILITRES;
 			case "l" : 
 				return Units.LITRES;
+			case "lb" :
+				return Units.POUNDS;
+			case "oz" :
+				return Units.OUNCES;
+			case "fl.oz" :
+				return Units.FLUID_OUNCES;
+			case "gal" :
+				return Units.GALLONS;
+			case "pt" :
+				return Units.PINTS;
+			case "qt" :
+				return Units.QUARTS;
+			case "ea" :
+				return Units.EACH;
 			
+			default :
+				throw new AssertionError();
 		}
-		
-		return Units.EACH;
 	}
 	
 	public static void addItem() throws IOException {
@@ -228,7 +239,7 @@ public class Main {
 		String name = handleSelection("Please input the item name: ", true);
 		boolean cont = false;
 		double parsedQuantity = 0.0;
-		Units unit;
+		Units unit = null;
 		
 		do {
 			System.out.println("Available Units: "); 
@@ -241,13 +252,16 @@ public class Main {
 			if (!cont) {
 				System.out.println("Invalid input! Please input the item quantity and unit, separated by a space according to the legends.");
 				continue;
-			} else {
-				String[] splitted = quantity.split(" ");
-				parsedQuantity = Double.parseDouble(splitted[0]);	
-				
-				unit = handleQuantity(splitted[1]);
 			}
+			String[] splitted = quantity.split(" ");
+			parsedQuantity = Double.parseDouble(splitted[0]);	
+			
+			unit = handleQuantity(splitted[1]);
 		} while (!cont);
+		
+		
+		
+		items.add(new Item(name, parsedQuantity, unit, 0.0, "bruh", false, "bruh momento uno", ""));
 	}
 	
 	public static void displayItems() throws IOException {

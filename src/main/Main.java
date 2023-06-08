@@ -1,11 +1,7 @@
-/**
- * 
- */
 package main;
 
 /**
  * @author tluo9638, ljensen0762
- *
  */
 
 import java.io.*;
@@ -28,19 +24,6 @@ public class Main {
 	static StringTokenizer st;
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		System.out.println("  _____      _          _                 _    \r\n"
-						 + " |  __ \\    (_)        | |               | |   \r\n"
-						 + " | |__) | __ _  ___ ___| |__   ___   ___ | | __\r\n"
-						 + " |  ___/ '__| |/ __/ _ \\ '_ \\ / _ \\ / _ \\| |/ /\r\n"
-						 + " | |   | |  | | (_|  __/ |_) | (_) | (_) |   < \r\n"
-						 + " |_|   |_|  |_|\\___\\___|_.__/ \\___/ \\___/|_|\\_\\\r\n"
-						 + "                                               \r\n"
-						 + "                                               ");
-		
-		
-		
-		
 	}
 	
 	public static int handleSelection(Object array, String selectMsg, String selectMethod, int length) throws Exception {

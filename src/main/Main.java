@@ -42,8 +42,8 @@ public class Main {
 		System.out.println("\n\n");
 		
 		
-		String[] options = {"add", "display"};
-		String[] descriptions = {"Add an item", "Display all items"};
+		String[] options = {"add", "display", "remove"};
+		String[] descriptions = {"Add an item", "Display all items", "Remove an item"};
 		
 		while (true) {
 			int returned = handleSelection("Choose a command: ", options, descriptions);
@@ -201,7 +201,10 @@ public class Main {
 				addItem();
 				break;
 			case "display" :
-				displayItems();
+				displayItems(false);
+				break;
+			case "remove" :
+				displayItems(true);
 				break;
 			default:
 				break;
@@ -329,15 +332,19 @@ public class Main {
 		items.add(new Item(name, parsedQuantity, unit, price, brandName, isSale, storeName, date));
 	}
 	
-	public static void displayItems() throws IOException {
+	public static void displayItems(boolean showNumbers) throws IOException {
 		String[] shortUnitNames = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", ""};
 		String[] longUnitNames = {"millilitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each"};
-
-		String leftAlignFormat = "| %-20s | %-10s | %-10s | %-20s | %-20s | %-5s | %-20s |%n";
-		System.out.println("==============================================================LIST=============================================================");
-		System.out.format(leftAlignFormat, "Item", "Quantity", "Price", "Brand", "Store", "Sale?", "Date");
-		System.out.println("===============================================================================================================================");
+		
+		String leftAlignFormat = "";
+		leftAlignFormat = "|%-4s| %-20s | %-10s | %-10s | %-20s | %-20s | %-5s | %-20s |%n"; 
+		
+		System.out.println("================================================================LIST==============================================================");
+		System.out.format(leftAlignFormat, "    ", "Item", "Quantity", "Price", "Brand", "Store", "Sale?", "Date");
+		System.out.println("==================================================================================================================================");
+		int iter = 0;
 		for (Item item : items) {
+			iter++;
 			String unit = item.unit.toString().toLowerCase();
 			unit = unit.replace("_", " ");
 			
@@ -348,9 +355,10 @@ public class Main {
 					break;
 				}
 			}
+			String sale = item.isSale ? "yes" : "no";
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-			System.out.format(leftAlignFormat, item.name, item.quantity + " " + shortUnit, item.price, item.brandName, item.storeName, item.isSale, item.date.format(formatter));
-			System.out.println("===============================================================================================================================");
+			System.out.format(leftAlignFormat, iter, item.name, item.quantity + " " + shortUnit, item.price, item.brandName, item.storeName, sale, item.date.format(formatter));
+			System.out.println("==================================================================================================================================");
 		}
 	}
 	

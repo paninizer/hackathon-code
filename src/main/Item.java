@@ -57,4 +57,17 @@ public class Item {
 	public double getUnitPrice() {
 		return this.price/this.quantity;
 	}
+	
+	public static boolean parseQuantity(String quantity) {
+		String[] suffixes = {"g", "oz", "fl oz", "ml", "ea"};
+		
+		String[] parsing = quantity.split(" ");
+		for (int i=0; i<suffixes.length; i++) {
+			if (!parsing[1].endsWith(suffixes[i])) return false;
+		}
+		
+		if (!Main.isNumeric(parsing[0])) return false;
+		
+		return true;
+	}
 }

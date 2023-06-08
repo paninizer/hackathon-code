@@ -7,6 +7,8 @@ package main;
 import java.io.*;
 import java.util.*;
 
+import main.Item.Units;
+
 public class Main {
 
 	/**
@@ -22,6 +24,7 @@ public class Main {
 	
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
+	static ArrayList<Item> items = new ArrayList<>();
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -36,11 +39,15 @@ public class Main {
 		
 		System.out.println("\n\n");
 		
+		
 		String[] options = {"add", "display"};
 		String[] descriptions = {"Add an item", "Display all items"};
-		int returned = handleSelection("Choose a command: ", options, descriptions);
 		
-		handleSelection(options[returned]);
+		while (true) {
+			int returned = handleSelection("Choose a command: ", options, descriptions);
+			
+			handleSelection(options[returned]); 
+		}
 	}
 	
 	public static int handleSelection(String selectMsg, String selectMethod, int length) throws Exception {
@@ -199,10 +206,50 @@ public class Main {
 		}
 	}
 	
-	public static void addItem() throws IOException {
-		String selection = handleSelection("Please input the item name: ", true);
+	public static Units handleQuantity(String unit) {
 		
-		System.out.println(selection);
+		Units returning = Units.EACH;
+		
+		switch (unit) {
+			case "ml" :
+				return Units.MILLILITRES;
+			case "l" : 
+				return Units.LITRES;
+			
+		}
+		
+		return Units.EACH;
+	}
+	
+	public static void addItem() throws IOException {
+		String[] options = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", "ea"};
+		String[] descriptions = {"mililitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each (no unit)"};
+
+		String name = handleSelection("Please input the item name: ", true);
+		boolean cont = false;
+		double parsedQuantity = 0.0;
+		Units unit;
+		
+		do {
+			System.out.println("Available Units: "); 
+			for (int i=0; i< options.length; i++) {
+				System.out.println("--  " + options[i] + " = " + descriptions[i]);
+			}
+			String quantity = handleSelection("Please input the item quantity and unit, separated by a space: ", true);
+			cont = Item.parseQuantity(quantity);
+			
+			if (!cont) {
+				System.out.println("Invalid input! Please input the item quantity and unit, separated by a space according to the legends.");
+				continue;
+			} else {
+				String[] splitted = quantity.split(" ");
+				parsedQuantity = Double.parseDouble(splitted[0]);	
+				
+				unit = handleQuantity(splitted[1]);
+			}
+		} while (!cont);
+		
+		
 	}
 	
 	public static boolean isInteger(String str) {
@@ -227,6 +274,34 @@ public class Main {
 	        }
 	    }
 	    return true;
+	}
+
+	public static boolean isDecimal(String str) {
+	    if (str == null) {
+	        return false;
+	    }
+	    int length = str.length();
+	    if (length == 0) {
+	        return false;
+	    }
+	    int i = 0;
+	    if (str.charAt(0) == '-') {
+	        if (length == 1) {
+	            return false;
+	        }
+	        i = 1;
+	    }
+	    for (; i < length; i++) {
+	        char c = str.charAt(i);
+	        if (c < '0' || c > '9') {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+	
+	public static boolean isNumeric(String str) {
+		return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
 	}
 	
 	public static boolean isCharacter(String str) {

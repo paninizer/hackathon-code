@@ -24,6 +24,7 @@ public class Main {
 	static StringTokenizer st;
 	
 	public static void main(String[] args) throws IOException {
+		
 	}
 	
 	public static int handleSelection(Object array, String selectMsg, String selectMethod, int length) throws Exception {

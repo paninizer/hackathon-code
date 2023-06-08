@@ -36,8 +36,10 @@ public class Main {
 		
 		System.out.println("\n\n");
 		
+		String[] options = {"add", "display"};
+		String[] descriptions = {"Add an item", "Display all items"};
+		int returned = handleSelection("Choose a command: ", options, descriptions);
 		
-		int returned = handleSelection("Choose a command (A-B): ", "character", 2);
 		
 	}
 	
@@ -89,7 +91,7 @@ public class Main {
 					System.out.print(selectMsg);
 					input = br.readLine();
 				}
-				selector = Integer.parseInt(input)-65;
+				selector = (int) input.charAt(0)-65;
 				
 				if (selector<0 || selector>(length-1)) { // if not valid
 					System.out.println();
@@ -108,11 +110,11 @@ public class Main {
 		throw new Exception("Params incorrect.");
 	}
 	
-	public static int handleSelection(String selectMsg, String[] options) throws Exception {
+	public static int handleSelection(String selectMsg, String[] options, String[] description) throws Exception {
 		
 		System.out.println("Available Options: ");
 		for (int i=0; i< options.length; i++) {
-			System.out.println("--  " + options[i]);
+			System.out.println("--  " + options[i] + " = " + description[i]);
 		}
 		
 		System.out.print(selectMsg);
@@ -122,11 +124,31 @@ public class Main {
 		while (!isValidInput) {
 			String input = br.readLine(); // read input
 			
-			Arrays.asList(options).contains(input);
+			for (int i=0; i<options.length; i++) {
+				if (options[i].equals(input.toLowerCase())) {
+					selector = i;
+					isValidInput = true;
+					break;
+				}
+			}
+			
+			System.out.println("Invalid input, please make sure your input matches one of the options and try again.");
 		}
 		
-		
-		throw new Exception("Params incorrect.");
+		return selector;
+	}
+	
+	public static void handleSelection(String selectId, int selected) {
+		switch (selectId) {
+			case "add/edit" :
+				
+				break;
+			case "item menu" :
+				
+				break;
+			default:
+				break;
+		}
 	}
 	
 	public static boolean isInteger(String str) {

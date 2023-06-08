@@ -23,12 +23,25 @@ public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
+		
+		System.out.println("  _____      _          _                 _    \r\n"
+				 + " |  __ \\    (_)        | |               | |   \r\n"
+				 + " | |__) | __ _  ___ ___| |__   ___   ___ | | __\r\n"
+				 + " |  ___/ '__| |/ __/ _ \\ '_ \\ / _ \\ / _ \\| |/ /\r\n"
+				 + " | |   | |  | | (_|  __/ |_) | (_) | (_) |   < \r\n"
+				 + " |_|   |_|  |_|\\___\\___|_.__/ \\___/ \\___/|_|\\_\\\r\n"
+				 + "                                               \r\n"
+				 + "                                               ");
+		
+		System.out.println("\n\n");
+		
+		
+		int returned = handleSelection("Choose a command (A-B): ", "character", 2);
 		
 	}
 	
-	public static int handleSelection(Object array, String selectMsg, String selectMethod, int length) throws Exception {
-		if (!array.getClass().isArray()) throw new Exception("Params incorrect: must be an array"); // if not array that can be selected
+	public static int handleSelection(String selectMsg, String selectMethod, int length) throws Exception {
 		
 		System.out.print(selectMsg);
 		
@@ -90,34 +103,28 @@ public class Main {
 			
 			return selector;
 			
-		} else if (selectMethod.equals("yn")) {
-			while (!isValidInput) {
-				String input = br.readLine(); // read input
-				
-				while (!isCharacter(input)) { // if not int
-					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be a character!");
-					System.out.println("==========EXCEPTION=========");
-					System.out.println();
-					System.out.print(selectMsg);
-					input = br.readLine();
-				}
-				selector = Integer.parseInt(input)-65;
-				
-				if (selector<0 || selector>(length-1)) { // if not valid
-					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be at least A and no more than "+ ((char)(65+length-1)));
-					System.out.println("==========EXCEPTION=========");
-					System.out.println();
-					System.out.print(selectMsg);					
-				} else isValidInput = true;			
-			}
-			
-			return selector;
-		
 		}
+		
+		throw new Exception("Params incorrect.");
+	}
+	
+	public static int handleSelection(String selectMsg, String[] options) throws Exception {
+		
+		System.out.println("Available Options: ");
+		for (int i=0; i< options.length; i++) {
+			System.out.println("--  " + options[i]);
+		}
+		
+		System.out.print(selectMsg);
+		
+		boolean isValidInput = false;
+		int selector = 0; // scope level declaration
+		while (!isValidInput) {
+			String input = br.readLine(); // read input
+			
+			Arrays.asList(options).contains(input);
+		}
+		
 		
 		throw new Exception("Params incorrect.");
 	}

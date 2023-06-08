@@ -57,9 +57,9 @@ public class Main {
 				
 				while (!isInteger(input)) { // if not int
 					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be a number!");
-					System.out.println("==========EXCEPTION=========");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|           Input must be a number!            |");
+					System.out.println("====================EXCEPTION===================");
 					System.out.println();
 					System.out.print(selectMsg);
 					input = br.readLine();
@@ -68,9 +68,9 @@ public class Main {
 				
 				if (selector<0 || selector>(length-1)) { // if not valid
 					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be at least 0 and no more than "+ (length-1));
-					System.out.println("==========EXCEPTION=========");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|     Input must be in range 0 < input < "+ (length-1) + "     |");
+					System.out.println("====================EXCEPTION===================");
 					System.out.println();
 					System.out.print(selectMsg);					
 				} else isValidInput = true;
@@ -84,20 +84,19 @@ public class Main {
 				
 				while (!isCharacter(input)) { // if not int
 					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be a character!");
-					System.out.println("==========EXCEPTION=========");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|          Input must be a character!          |");
+					System.out.println("====================EXCEPTION===================");
 					System.out.println();
 					System.out.print(selectMsg);
 					input = br.readLine();
 				}
 				selector = (int) input.charAt(0)-65;
-				
 				if (selector<0 || selector>(length-1)) { // if not valid
 					System.out.println();
-					System.out.println("==========EXCEPTION=========");
-					System.out.println("|| Input must be at least A and no more than "+ ((char)(65+length-1)));
-					System.out.println("==========EXCEPTION=========");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|   Input must be between A and "+ ((char)(65+length-1)) + " (inclusive)  |");
+					System.out.println("====================EXCEPTION===================");
 					System.out.println();
 					System.out.print(selectMsg);					
 				} else isValidInput = true;

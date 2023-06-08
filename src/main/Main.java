@@ -5,6 +5,8 @@ package main;
  */
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import main.Item.Units;
@@ -301,8 +303,24 @@ public class Main {
 		String date = "";
 		
 		cont = false;
-		System.out.print("Input the date of purchase in YYYY/MM/DD format, or just press enter if it's the current date: ");
-		date = br.readLine();
+		do {
+			System.out.print("Input the date of purchase in DD MMM YYYY format, e.g. 10 Jan 2000, or just press enter if it's the current date: ");
+			date = br.readLine();
+			
+			if (date.equals("")) {
+				break;
+			} else {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+				try {
+					LocalDate.parse(date, formatter);
+				} catch (Exception e) {
+					System.out.println("Invalid input! Please follow the instructions and the examples!");
+					continue;
+				}
+				cont = true;
+			}
+		} while (!cont);
+		
 		
 		items.add(new Item(name, parsedQuantity, unit, price, brandName, isSale, storeName, date));
 	}

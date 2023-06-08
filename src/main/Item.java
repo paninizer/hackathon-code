@@ -1,6 +1,7 @@
 package main;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Item {
 	
@@ -57,7 +58,8 @@ public class Item {
 		if (date.equals("")) {
 			d = LocalDate.now();
 		} else {
-			d = LocalDate.parse(date);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+			d = LocalDate.parse(date, formatter);
 		}
 		
 		this.date = d;

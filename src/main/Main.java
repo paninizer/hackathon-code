@@ -4,7 +4,7 @@
 package main;
 
 /**
- * @author tluo9638
+ * @author tluo9638, ljensen0762
  *
  */
 

@@ -5,11 +5,19 @@ import java.time.LocalDate;
 public class Item {
 	
 	enum Units {
+		KILOGRAMS,
 		GRAMS,
+		
+		POUNDS,
 		OUNCES,
 		
+		LITRES,
 		MILLILITRES,
-		FL_OUNCES,
+		
+		GALLONS,
+		QUARTS,
+		PINTS,
+		FLUID_OUNCES,
 		
 		EACH
 	}
@@ -25,15 +33,16 @@ public class Item {
 	
 	public Item(String name, double quantity, Units unit, double price, String brandName, boolean isSale, String store, String date) {
 		this.name = name;
-		
+	
+		/*
 		if (unit == Units.OUNCES) {
 			unit = Units.GRAMS;
 			quantity *= 28.35;
 		}
-		if (unit == Units.FL_OUNCES) {
+		if (unit == Units.FLUID_OUNCES) {
 			unit = Units.MILLILITRES;
 			quantity *= 29.57;
-		}
+		}*/
 		
 		this.quantity = quantity;
 		this.unit = unit;

@@ -199,7 +199,7 @@ public class Main {
 				addItem();
 				break;
 			case "display" :
-				
+				displayItems();
 				break;
 			default:
 				break;
@@ -248,8 +248,23 @@ public class Main {
 				unit = handleQuantity(splitted[1]);
 			}
 		} while (!cont);
-		
-		
+	}
+	
+	public static void displayItems() throws IOException {
+		String leftAlignFormat = "| %-20s | %-19s | %n";
+		System.out.println("=====================LIST=====================");
+		System.out.format(leftAlignFormat, "Item", "Quantity");
+		System.out.println("==============================================");
+		for (Item item : items) {
+			if (item.unit == Units.EACH) {
+				System.out.format(leftAlignFormat, item.name, (int)item.quantity);
+			} else {
+				String unit = item.unit.toString().toLowerCase();
+				unit = unit.replace("_", " ");
+				System.out.format(leftAlignFormat, item.name, item.quantity + " " + unit);
+			}
+			System.out.println("==============================================");
+		}
 	}
 	
 	public static boolean isInteger(String str) {

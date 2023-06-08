@@ -195,7 +195,7 @@ public class Main {
 		throw new AssertionError();
 	}
 	
-	public static void handleSelection(String selectId) throws IOException {
+	public static void handleSelection(String selectId) throws Exception {
 		switch (selectId) {
 			case "add" :
 				addItem();
@@ -205,6 +205,7 @@ public class Main {
 				break;
 			case "remove" :
 				displayItems(true);
+				removeItem();
 				break;
 			default:
 				break;
@@ -360,6 +361,13 @@ public class Main {
 			System.out.format(leftAlignFormat, iter, item.name, item.quantity + " " + shortUnit, item.price, item.brandName, item.storeName, sale, item.date.format(formatter));
 			System.out.println("==================================================================================================================================");
 		}
+	}
+	
+	public static void removeItem() throws Exception {
+		int remove = handleSelection("Select an item to remove: ", "number", items.size());
+		
+		items.remove(remove);
+		System.out.println("Item removed successfully!");
 	}
 	
 	public static boolean isInteger(String str) {

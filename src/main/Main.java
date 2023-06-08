@@ -64,14 +64,18 @@ public class Main {
 				
 				String input = br.readLine(); // read input
 				
-				while (!isInteger(input)) { // if not int
+				if (input.equals("cancel")) {
+					return Integer.MAX_VALUE;
+				}
+				
+				if (!isInteger(input)) { // if not int
 					System.out.println();
 					System.out.println("====================EXCEPTION===================");
 					System.out.println("|           Input must be a number!            |");
 					System.out.println("====================EXCEPTION===================");
 					System.out.println();
 					System.out.print(selectMsg);
-					input = br.readLine();
+					continue;
 				}
 				selector = Integer.parseInt(input);
 				
@@ -312,8 +316,7 @@ public class Main {
 		
 		cont = false;
 		do {
-			System.out.print("Input the date of purchase in DD MMM YYYY format, e.g. 10 Jan 2000, or just press enter if it's the current date: ");
-			date = br.readLine();
+			date = handleSelection("Input the date of purchase in DD MMM YYYY format, e.g. 10 Jan 2000, or just press enter if it's the current date: ", true);
 			
 			if (date.equals("")) {
 				break;
@@ -365,6 +368,8 @@ public class Main {
 	
 	public static void removeItem() throws Exception {
 		int remove = handleSelection("Select an item to remove: ", "number", items.size());
+		
+		if (remove==Integer.MAX_VALUE) return;
 		
 		items.remove(remove);
 		System.out.println("Item removed successfully!");

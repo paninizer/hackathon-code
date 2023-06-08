@@ -174,7 +174,7 @@ public class Main {
 				String confirm = br.readLine().toLowerCase();
 				
 				if (confirm.equals("no")) {
-					handleSelection(selectMsg, true);
+					return handleSelection(selectMsg, true);
 				} else if (confirm.equals("yes")) {
 					return input;
 				} else {
@@ -186,7 +186,7 @@ public class Main {
 		throw new AssertionError();
 	}
 	
-	public static void handleSelection(String selectId) {
+	public static void handleSelection(String selectId) throws IOException {
 		switch (selectId) {
 			case "add" :
 				addItem();
@@ -199,10 +199,10 @@ public class Main {
 		}
 	}
 	
-	public static void addItem() {
+	public static void addItem() throws IOException {
+		String selection = handleSelection("Please input the item name: ", true);
 		
-		
-		
+		System.out.println(selection);
 	}
 	
 	public static boolean isInteger(String str) {

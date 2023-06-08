@@ -240,6 +240,7 @@ public class Main {
 		boolean cont = false;
 		double parsedQuantity = 0.0;
 		Units unit = null;
+		double price = 0;
 		
 		do {
 			System.out.println("Available Units: "); 
@@ -259,9 +260,51 @@ public class Main {
 			unit = handleQuantity(splitted[1]);
 		} while (!cont);
 		
+		cont = false;
+		do {
+			System.out.print("Enter the price, numbers only: ");
+			String input = br.readLine();
+			
+			try {
+				price = Double.parseDouble(input);
+			} catch (java.lang.NumberFormatException e) {
+				System.out.println("Invalid input! Please enter the only numbers!");
+				continue;
+			}
+			
+			if (price<=0) {
+				System.out.println("Invalid input! Please enter a number greater than 0!");
+				continue;
+			}
+			
+			cont = true;
+		} while (!cont);
 		
+		String brandName = handleSelection("Please input the brand name: ", true);
+		String storeName = handleSelection("Please input the store name: ", true);
+		boolean isSale = false;
 		
-		items.add(new Item(name, parsedQuantity, unit, 0.0, "bruh", false, "bruh momento uno", ""));
+		cont = false;
+		do {
+			System.out.print("Please input if this item is on sale (yes/no): ");
+			String confirm = br.readLine();
+			if (confirm.equals("no")) {
+				break;
+			} else if (confirm.equals("yes")) {
+				isSale = true;
+				cont = true;
+			} else {
+				System.out.println("Invalid input. Please input yes or no.");
+			}
+		} while (!cont);
+		
+		String date = "";
+		
+		cont = false;
+		System.out.print("Input the date of purchase in YYYY/MM/DD format, or just press enter if it's the current date: ");
+		date = br.readLine();
+		
+		items.add(new Item(name, parsedQuantity, unit, price, brandName, isSale, storeName, date));
 	}
 	
 	public static void displayItems() throws IOException {

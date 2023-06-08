@@ -169,12 +169,21 @@ public class Main {
 		String input = br.readLine();
 		
 		if (canConfirm) {
-			System.out.print("Do you confirm? (yes/no): ");
-			String confirm = br.readLine();
-			
-			
+			do {
+				System.out.print("Do you confirm? (yes/no): ");
+				String confirm = br.readLine().toLowerCase();
+				
+				if (confirm.equals("no")) {
+					handleSelection(selectMsg, true);
+				} else if (confirm.equals("yes")) {
+					return input;
+				} else {
+					System.out.println("Invalid input. Please input yes or no.");
+				}
+			} while (true);
 		}
 		
+		throw new AssertionError();
 	}
 	
 	public static void handleSelection(String selectId) {

@@ -84,13 +84,41 @@ public class Main {
 					System.out.println("==========EXCEPTION=========");
 					System.out.println();
 					System.out.print(selectMsg);					
-				} else isValidInput = true;			
-				
-				return selector;
+				} else isValidInput = true;
 			}
-		} 
+			
+			return selector;
+			
+		} else if (selectMethod.equals("yn")) {
+			while (!isValidInput) {
+				String input = br.readLine(); // read input
+				
+				while (!isCharacter(input)) { // if not int
+					System.out.println();
+					System.out.println("==========EXCEPTION=========");
+					System.out.println("|| Input must be a character!");
+					System.out.println("==========EXCEPTION=========");
+					System.out.println();
+					System.out.print(selectMsg);
+					input = br.readLine();
+				}
+				selector = Integer.parseInt(input)-65;
+				
+				if (selector<0 || selector>(length-1)) { // if not valid
+					System.out.println();
+					System.out.println("==========EXCEPTION=========");
+					System.out.println("|| Input must be at least A and no more than "+ ((char)(65+length-1)));
+					System.out.println("==========EXCEPTION=========");
+					System.out.println();
+					System.out.print(selectMsg);					
+				} else isValidInput = true;			
+			}
+			
+			return selector;
 		
-		throw new Exception("Params incorrect: handleSelection(array, message, method) must have either \"number\" or \"character\" passed in");
+		}
+		
+		throw new Exception("Params incorrect.");
 	}
 	
 	public static boolean isInteger(String str) {

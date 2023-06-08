@@ -1,11 +1,7 @@
-/**
- * 
- */
 package main;
 
 /**
  * @author tluo9638, ljensen0762
- *
  */
 
 import java.io.*;
@@ -28,8 +24,6 @@ public class Main {
 	static StringTokenizer st;
 	
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		System.out.println(save.getAbsolutePath());
 	}
 
 }

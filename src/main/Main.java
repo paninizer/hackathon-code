@@ -40,7 +40,7 @@ public class Main {
 		String[] descriptions = {"Add an item", "Display all items"};
 		int returned = handleSelection("Choose a command: ", options, descriptions);
 		
-		
+		handleSelection(options[returned]);
 	}
 	
 	public static int handleSelection(String selectMsg, String selectMethod, int length) throws Exception {
@@ -104,6 +104,32 @@ public class Main {
 			
 			return selector;
 			
+		} else if (selectMethod.equals("yes/no")) {
+			while (!isValidInput) {
+				String input = br.readLine(); // read input
+				
+				while (!isCharacter(input)) { // if not int
+					System.out.println();
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|          Input must be a character!          |");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println();
+					System.out.print(selectMsg);
+					input = br.readLine();
+				}
+				selector = (int) input.charAt(0)-65;
+				if (selector<0 || selector>(length-1)) { // if not valid
+					System.out.println();
+					System.out.println("====================EXCEPTION===================");
+					System.out.println("|   Input must be between A and "+ ((char)(65+length-1)) + " (inclusive)  |");
+					System.out.println("====================EXCEPTION===================");
+					System.out.println();
+					System.out.print(selectMsg);					
+				} else isValidInput = true;
+			}
+			
+			return selector;
+			
 		}
 		
 		throw new Exception("Params incorrect.");
@@ -111,16 +137,16 @@ public class Main {
 	
 	public static int handleSelection(String selectMsg, String[] options, String[] description) throws Exception {
 		
-		System.out.println("Available Options: ");
-		for (int i=0; i< options.length; i++) {
-			System.out.println("--  " + options[i] + " = " + description[i]);
-		}
-		
-		System.out.print(selectMsg);
-		
 		boolean isValidInput = false;
 		int selector = 0; // scope level declaration
 		while (!isValidInput) {
+			System.out.println("\nAvailable Options: ");
+			for (int i=0; i< options.length; i++) {
+				System.out.println("--  " + options[i] + " = " + description[i]);
+			}
+			System.out.println();
+			System.out.print(selectMsg);
+		
 			String input = br.readLine(); // read input
 			
 			for (int i=0; i<options.length; i++) {
@@ -137,17 +163,37 @@ public class Main {
 		return selector;
 	}
 	
-	public static void handleSelection(String selectId, int selected) {
+	public static String handleSelection(String selectMsg, boolean canConfirm) throws IOException {
+		
+		System.out.print(selectMsg);
+		String input = br.readLine();
+		
+		if (canConfirm) {
+			System.out.print("Do you confirm? (yes/no): ");
+			String confirm = br.readLine();
+			
+			
+		}
+		
+	}
+	
+	public static void handleSelection(String selectId) {
 		switch (selectId) {
-			case "add/edit" :
-				//addItem();
+			case "add" :
+				addItem();
 				break;
-			case "item menu" :
+			case "display" :
 				
 				break;
 			default:
 				break;
 		}
+	}
+	
+	public static void addItem() {
+		
+		
+		
 	}
 	
 	public static boolean isInteger(String str) {

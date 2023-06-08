@@ -268,8 +268,8 @@ public class Main {
 		
 		cont = false;
 		do {
-			System.out.print("Enter the price, numbers only: ");
-			String input = br.readLine();
+			//System.out.print("Enter the price, numbers only: ");
+			String input = handleSelection("Enter the price, numbers only: ", true);
 			
 			try {
 				price = Double.parseDouble(input);

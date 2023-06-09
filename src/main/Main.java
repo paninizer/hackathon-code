@@ -8,6 +8,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.text.*;
 
 import main.Item.Units;
 
@@ -27,6 +28,7 @@ public class Main {
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	static StringTokenizer st;
 	static ArrayList<Item> items = new ArrayList<>();
+	static DecimalFormat df = new DecimalFormat("0.00");
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -42,8 +44,8 @@ public class Main {
 		System.out.println("\n\n");
 		
 		
-		String[] options = {"add", "display", "remove"};
-		String[] descriptions = {"Add an item", "Display all items", "Remove an item"};
+		String[] options = {"add", "display", "remove", "quit"};
+		String[] descriptions = {"Add an item", "Display all items", "Remove an item", "Quit program"};
 		
 		while (true) {
 			int returned = handleSelection("Choose a command: ", options, descriptions);
@@ -211,6 +213,8 @@ public class Main {
 				displayItems(true);
 				removeItem();
 				break;
+			case "quit" :
+				System.exit(0);
 			default:
 				break;
 		}
@@ -321,7 +325,7 @@ public class Main {
 			if (date.equals("")) {
 				break;
 			} else {
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
 				try {
 					LocalDate.parse(date, formatter);
 				} catch (Exception e) {
@@ -339,19 +343,19 @@ public class Main {
 	public static void displayItems(boolean showNumbers) throws IOException {
 		String[] shortUnitNames = {"ml", "l", "g", "kg", "lb", "oz", "fl.oz", "gal", "pt", "qt", ""};
 		String[] longUnitNames = {"millilitres", "litres", "grams", "kilograms", "pounds", "ounces", "fluid ounces", "gallons", "pints", "quarts", "each"};
+		double total = 0.0;
 		
 		String leftAlignFormat = "";
-		leftAlignFormat = "|%-4s| %-20s | %-10s | %-10s | %-20s | %-20s | %-5s | %-20s |%n"; 
+		leftAlignFormat = "|%-4s| %-20s | %-10s | %-10s | %-20s | %-20s | %-5s | %-18s |%n"; 
 		
 		System.out.println("================================================================LIST==============================================================");
 		System.out.format(leftAlignFormat, "    ", "Item", "Quantity", "Price", "Brand", "Store", "Sale?", "Date");
 		System.out.println("==================================================================================================================================");
 		int iter = 0;
 		for (Item item : items) {
-			iter++;
+			total+=item.price;
 			String unit = item.unit.toString().toLowerCase();
 			unit = unit.replace("_", " ");
-			
 			String shortUnit = "";
 			for (int i = 0; i < shortUnitNames.length; i++) {
 				if (longUnitNames[i].contains(unit)) {
@@ -361,13 +365,17 @@ public class Main {
 			}
 			String sale = item.isSale ? "yes" : "no";
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
-			System.out.format(leftAlignFormat, iter, item.name, item.quantity + " " + shortUnit, item.price, item.brandName, item.storeName, sale, item.date.format(formatter));
+			System.out.format(leftAlignFormat, iter, item.name, item.quantity + " " + shortUnit, df.format(item.price), item.brandName, item.storeName, sale, item.date.format(formatter));
 			System.out.println("==================================================================================================================================");
+			iter++;
 		}
+		
+		System.out.format(leftAlignFormat, "    ", "Total", "", df.format(total), "", "", "", "", "", LocalDate.now());
+		System.out.println("==================================================================================================================================");
 	}
 	
 	public static void removeItem() throws Exception {
-		int remove = handleSelection("Select an item to remove: ", "number", items.size());
+		int remove = handleSelection("Select an item to remove or enter cancel to cancel: ", "number", items.size());
 		
 		if (remove==Integer.MAX_VALUE) return;
 		

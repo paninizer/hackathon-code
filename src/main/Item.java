@@ -58,7 +58,7 @@ public class Item {
 		if (date.equals("")) {
 			d = LocalDate.now();
 		} else {
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
 			d = LocalDate.parse(date, formatter);
 		}
 		
